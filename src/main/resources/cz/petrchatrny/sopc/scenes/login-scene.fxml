@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.petrchatrny.sopc.controller.LoginController">
-    <Label layoutX="260.0" layoutY="192.0" text="Login Scene"/>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
+            prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/login-and-register.css"
+            fx:controller="cz.petrchatrny.sopc.controller.LoginController">
+    <left>
+        <AnchorPane prefHeight="500.0" prefWidth="350.0" styleClass="left" BorderPane.alignment="CENTER">
+            <Label layoutX="101.0" layoutY="53.0" styleClass="heading, big" text="Osadníci"/>
+            <Label layoutX="38.0" layoutY="101.0" styleClass="heading" text="z Proxima Centauri"/>
+            <ImageView fitHeight="280.0" fitWidth="271.0" layoutX="40.0" layoutY="141.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../images/proxima-centauri.gif"/>
+            </ImageView>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="500.0" prefWidth="353.0" styleClass="right" BorderPane.alignment="CENTER">
+            <Label layoutX="53.0" layoutY="136.0" text="Email"/>
+            <TextField fx:id="emailTF" layoutX="53.0" layoutY="164.0" prefHeight="30.0" prefWidth="245.0"/>
+
+            <Label layoutX="53.0" layoutY="215.0" text="Heslo"/>
+            <PasswordField fx:id="passwordTF" layoutX="53.0" layoutY="242.0" prefHeight="30.0" prefWidth="245.0"/>
+
+            <Button layoutX="53.0" layoutY="293.0" mnemonicParsing="false" onAction="#login" text="Přihlásit se"/>
+            <Label layoutX="226.0" layoutY="298.0" onMouseClicked="#showRegistrationForm"
+                   styleClass="small, clickable" text="Registrace"/>
+        </AnchorPane>
+    </right>
+</BorderPane>
