@@ -5,7 +5,6 @@ import cz.petrchatrny.sopc.controller.Resultant;
 import cz.petrchatrny.sopc.service.ApiService;
 import javafx.concurrent.Task;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 
@@ -16,7 +15,7 @@ public class RegisterModel {
     };
     private Predicate<String> containsCharacters = s -> s.matches("^.*[a-zA-Z].*$");
     private Predicate<String> containsNumbers = s -> s.matches("^.*[a-zA-Z].*$");
-    private Predicate<String> containsSpecialChars = s -> s.matches("^.*[`!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~].*$");
+    private Predicate<String> containsSpecialChars = s -> s.matches("^.*[`!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?~].*$");
 
     /**
      * Method validates user's input and if all goes well it calls ApiService to register new user. Otherwise, it
@@ -61,29 +60,24 @@ public class RegisterModel {
 
         // create asynchronous task
         ApiService apiService = ApiService.getInstance();
-        final Task<CompletableFuture<JsonObject>> task = new Task<>() {
+        final Task<JsonObject> task = new Task<>() {
             @Override
-            public CompletableFuture<JsonObject> call() {
-                return apiService.userRegister(username, email, password);
+            public JsonObject call() {
+                try {
+                    return apiService.userRegister(username, email, password).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
             }
         };
 
         // set task's result
         task.setOnSucceeded(event -> {
-            var response = task.getValue();
-            try {
-                JsonObject result = response.get();
-                switch (result.get("message").getAsString()) {
-                    case "success" -> resultant.onTaskSucceeded();
-                    case "email-in-use" -> resultant.onTaskFailed("Tato emailová adresa je již obsazena.");
-                    case "username-in-use" -> resultant.onTaskFailed("Toto uživatelské jméno je již obsazeno.");
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                resultant.onTaskFailed("Nastala neznámá chyba při komunikaci se serverem.",
-                        "Zkontrolujte své připojení k internetu a zkuste to znovu. Pokud problém přetrvává, zkuste" +
-                                " restartovat aplikaci. Pokud i tak problém stále přetrvává, může být chyba na straně " +
-                                " našich serverů.");
-                throw new RuntimeException(e);
+            JsonObject result = task.getValue();
+            switch (result.get("message").getAsString()) {
+                case "success" -> resultant.onTaskSucceeded();
+                case "email-in-use" -> resultant.onTaskFailed("Tato emailová adresa je již obsazena.");
+                case "username-in-use" -> resultant.onTaskFailed("Toto uživatelské jméno je již obsazeno.");
             }
         });
         task.setOnFailed(event -> resultant.onTaskFailed("Nastala neznámá chyba při komunikaci se serverem.",

@@ -56,7 +56,7 @@ public class RegisterController implements Resultant {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Úspěšně zaregistrováno");
         alert.setHeaderText(null);
-        alert.setContentText("Registrace proběhla úspěšně. Potvrď ji ve své emailové adrese.");
+        alert.setContentText("Registrace proběhla úspěšně. Pro její dokončení ji potvrďte ve svém emailu.");
         alert.showAndWait();
         App.showScene(SceneType.LOGIN);
     }
