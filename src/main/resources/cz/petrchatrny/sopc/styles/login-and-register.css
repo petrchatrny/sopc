@@ -1,13 +1,4 @@
-@font-face {
-    font-family: 'VT323';
-    src: url("../fonts/vt323.ttf");
-}
 
-Label {
-    -fx-font-family: VT323;
-    -fx-font-size: 24px;
-    -fx-text-fill: #ffffff;
-}
 
 .left {
     -fx-background-image: url('../images/default-background.png');
@@ -30,19 +21,6 @@ Label {
     -fx-font-size: 46px;
 }
 
-Button {
-    -fx-font-family: VT323;
-    -fx-background-color: #04103a;
-    -fx-text-fill: #ffffff;
-    -fx-effect: innershadow(three-pass-box, #ffffff, 2, 0, 0, 0);
-    -fx-font-size: 18px;
-    -fx-padding: 5px 10px;
-}
-
-Button:hover {
-    -fx-background-color: #0a1e65;
-}
-
 .clickable {
-    -fx-cursor: pointer;
+    -fx-cursor: hand;
 }

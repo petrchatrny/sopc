@@ -6,7 +6,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
             prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/login-and-register.css"
+            xmlns:fx="http://javafx.com/fxml/1" stylesheets=" @../styles/main.css, @../styles/login-and-register.css"
             fx:controller="cz.petrchatrny.sopc.controller.LoginController">
     <left>
         <AnchorPane prefHeight="500.0" prefWidth="350.0" styleClass="left" BorderPane.alignment="CENTER">

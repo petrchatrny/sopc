@@ -1,0 +1,8 @@
+.root {
+    -fx-background-image: url("../images/default-background.png");
+}
+
+Label {
+    -fx-font-size: 45px;
+    -fx-font-weight: bold;
+}
