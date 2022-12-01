@@ -21,3 +21,7 @@ Button {
 Button:hover {
     -fx-background-color: #0a1e65;
 }
+
+ProgressIndicator {
+    -fx-progress-color: white;
+}

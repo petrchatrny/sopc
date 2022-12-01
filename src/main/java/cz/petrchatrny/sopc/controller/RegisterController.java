@@ -2,13 +2,16 @@ package cz.petrchatrny.sopc.controller;
 
 import cz.petrchatrny.sopc.App;
 import cz.petrchatrny.sopc.SceneType;
-import javafx.event.ActionEvent;
+import cz.petrchatrny.sopc.model.RegisterModel;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 
-public class RegisterController {
+public class RegisterController implements Resultant {
+    private final RegisterModel model;
+    @FXML
+    private Button registerBT;
+    @FXML
+    private ProgressIndicator progressIndicator;
     @FXML
     private TextField nicknameTF;
     @FXML
@@ -18,13 +21,59 @@ public class RegisterController {
     @FXML
     private PasswordField repeatPasswordTF;
 
+    /**
+     * RegisterController's constructor that is requiring RegisterModel. Dependency injection patter applied.
+     *
+     * @param model RegisterController's model
+     */
+    public RegisterController(RegisterModel model) {
+        this.model = model;
+        this.model.setResultant(this);
+    }
+
     @FXML
-    private void showLoginForm(MouseEvent mouseEvent) {
+    private void showLoginForm() {
         App.showScene(SceneType.LOGIN);
     }
 
     @FXML
-    private void register(ActionEvent actionEvent) {
-        // todo
+    private void register() {
+        showLoading(true);
+
+        String nickname = nicknameTF.getText();
+        String email = emailTF.getText();
+        String password = passwordTF.getText();
+        String repeatPassword = repeatPasswordTF.getText();
+
+        model.register(nickname, email, password, repeatPassword);
+        //model.register(nicknameTF.getText(), emailTF.getText(), passwordTF.getText(), repeatPasswordTF.getText());
+    }
+
+    @Override
+    public void onTaskSucceeded() {
+        showLoading(false);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Úspěšně zaregistrováno");
+        alert.setHeaderText(null);
+        alert.setContentText("Registrace proběhla úspěšně. Potvrď ji ve své emailové adrese.");
+        alert.showAndWait();
+        App.showScene(SceneType.LOGIN);
+    }
+
+    @Override
+    public void onTaskFailed(String header, String text) {
+        showLoading(false);
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Chyba");
+        alert.setHeaderText(header);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
+    private void showLoading(boolean value) {
+        registerBT.setDisable(value);
+        progressIndicator.setVisible(value);
     }
 }

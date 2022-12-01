@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
-            prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            stylesheets="@../styles/main.css, @../styles/login-and-register.css"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.petrchatrny.sopc.controller.RegisterController">
+            prefWidth="700.0" stylesheets="@../styles/main.css, @../styles/login-and-register.css"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="cz.petrchatrny.sopc.controller.RegisterController">
     <left>
         <AnchorPane prefHeight="500.0" prefWidth="350.0" styleClass="left" BorderPane.alignment="CENTER">
             <Label layoutX="83.0" layoutY="266.0" styleClass="big" text="Registrace"/>
@@ -36,10 +36,12 @@
             <Label layoutX="53.0" layoutY="230.0" text="Heslo"/>
             <PasswordField fx:id="repeatPasswordTF" layoutX="53.0" layoutY="320.0" prefHeight="30.0" prefWidth="245.0"/>
 
-            <Button layoutX="53.0" layoutY="376.0" mnemonicParsing="false" onAction="#register"
-                    text="Zaregistrovat se"/>
+            <Button layoutX="53.0" layoutY="376.0" mnemonicParsing="false"
+                    fx:id="registerBT" onAction="#register" text="Zaregistrovat se"/>
             <Label layoutX="226.0" layoutY="381.0" onMouseClicked="#showLoginForm" styleClass="small, clickable"
                    text="Přihlášení"/>
+            <ProgressIndicator fx:id="progressIndicator" layoutX="166.0" layoutY="436.0" prefHeight="30"
+                               prefWidth="30" visible="false"/>
         </AnchorPane>
     </center>
 </BorderPane>

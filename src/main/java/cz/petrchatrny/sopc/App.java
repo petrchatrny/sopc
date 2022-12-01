@@ -4,6 +4,7 @@ import cz.petrchatrny.sopc.controller.GameController;
 import cz.petrchatrny.sopc.controller.HomeController;
 import cz.petrchatrny.sopc.controller.LoginController;
 import cz.petrchatrny.sopc.controller.RegisterController;
+import cz.petrchatrny.sopc.model.RegisterModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,7 +37,7 @@ public class App extends Application {
         stage.getIcons().add(new Image(String.valueOf(url)));
 
         // show default scene
-        showScene(SceneType.GAME);
+        showScene(SceneType.REGISTER);
     }
 
     /**
@@ -54,7 +55,7 @@ public class App extends Application {
             }
             case REGISTER -> {
                 loader = new FXMLLoader(App.class.getResource("scenes/register-scene.fxml"));
-                loader.setControllerFactory(t -> new RegisterController());
+                loader.setControllerFactory(t -> new RegisterController(new RegisterModel()));
             }
             case HOME -> {
                 loader = new FXMLLoader(App.class.getResource("scenes/home-scene.fxml"));

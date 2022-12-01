@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'cz.petrchatrny.sopc'
-    mainClass = 'cz.petrchatrny.sopc.Application'
+    mainClass = 'cz.petrchatrny.sopc.App'
 }
 
 javafx {
@@ -37,6 +37,8 @@ dependencies {
     implementation('org.controlsfx:controlsfx:11.1.2')
     implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
     implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.3.1'
+
+    implementation 'com.google.code.gson:gson:2.10'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
