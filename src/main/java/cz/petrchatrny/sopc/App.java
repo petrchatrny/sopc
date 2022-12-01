@@ -1,9 +1,9 @@
 package cz.petrchatrny.sopc;
 
-import cz.petrchatrny.sopc.controllers.GameController;
-import cz.petrchatrny.sopc.controllers.HomeController;
-import cz.petrchatrny.sopc.controllers.LoginController;
-import cz.petrchatrny.sopc.controllers.RegisterController;
+import cz.petrchatrny.sopc.controller.GameController;
+import cz.petrchatrny.sopc.controller.HomeController;
+import cz.petrchatrny.sopc.controller.LoginController;
+import cz.petrchatrny.sopc.controller.RegisterController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

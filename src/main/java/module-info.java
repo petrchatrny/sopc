@@ -9,6 +9,6 @@ module cz.petrchatrny.sopc {
 
     opens cz.petrchatrny.sopc to javafx.fxml;
     exports cz.petrchatrny.sopc;
-    exports cz.petrchatrny.sopc.controllers;
-    opens cz.petrchatrny.sopc.controllers to javafx.fxml;
+    exports cz.petrchatrny.sopc.controller;
+    opens cz.petrchatrny.sopc.controller to javafx.fxml;
 }
