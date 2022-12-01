@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="root"
+            stylesheets="@../styles/main.css, @../styles/home.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.petrchatrny.sopc.controller.HomeController">
-    <Label layoutX="259.0" layoutY="192.0" text="Home Scene"/>
+    <Label layoutX="107.0" layoutY="73.0" text="Osadníci z Proxima Centauri" textFill="WHITE">
+        <font>
+            <Font size="45.0"/>
+        </font>
+    </Label>
+
+    <Button layoutX="122.0" layoutY="198.0" mnemonicParsing="false" onAction="#onSinglePlayerSelected" prefHeight="36.0"
+            prefWidth="457.0" text="Hra pro jednoho hráče">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+    </Button>
+    <Button layoutX="122.0" layoutY="250.0" mnemonicParsing="false" onAction="#onMultiPlayerSelected" prefHeight="36.0"
+            prefWidth="457.0" text="Hra pro více hráčů">
+    </Button>
+
+    <Button layoutX="650.0" layoutY="450.0" mnemonicParsing="false" onAction="#onMultiPlayerSelected" prefHeight="36.0"
+            prefWidth="36.0">
+        <graphic>
+            <FontIcon fill="white" iconLiteral="fas-wrench" layoutX="50" layoutY="100" strokeWidth="64"/>
+        </graphic>
+    </Button>
+
 </AnchorPane>
