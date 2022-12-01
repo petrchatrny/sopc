@@ -80,10 +80,7 @@ public class RegisterModel {
                 case "username-in-use" -> resultant.onTaskFailed("Toto uživatelské jméno je již obsazeno.");
             }
         });
-        task.setOnFailed(event -> resultant.onTaskFailed("Nastala neznámá chyba při komunikaci se serverem.",
-                "Zkontrolujte své připojení k internetu a zkuste to znovu. Pokud problém přetrvává, zkuste" +
-                        " restartovat aplikaci. Pokud i tak problém stále přetrvává, může být chyba na straně " +
-                        " našich serverů."));
+        task.setOnFailed(event -> resultant.onTaskFailed(StringConst.INTERNET_ERR_MSG));
 
         // start async task
         new Thread(task).start();

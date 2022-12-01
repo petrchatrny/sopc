@@ -8,6 +8,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -119,5 +120,37 @@ public class ApiService {
         json.addProperty("password", password);
 
         return sendAsyncRequest(HttpMethod.POST, "/users/register", json);
+    }
+
+
+    /**
+     * Method for user authentication. If authentication is successful, response body contains detailed data about
+     * user. Otherwise, body contains error message.
+     *
+     * @param email    user's email address
+     * @param password user's password in plain text
+     * @return API response in JSON format
+     * @http POST /users/login
+     */
+    public CompletableFuture<JsonObject> userLogin(String email, String password) {
+        // jsonify body
+        JsonObject json = new JsonObject();
+        json.addProperty("email", email);
+        json.addProperty("password", password);
+
+        return sendAsyncRequest(HttpMethod.POST, "/users/login", json);
+    }
+
+    /**
+     * Method for checking validity check of authentication. It sends jwt token to server where is token validated.
+     *
+     * @param jwt json web token
+     * @return API response in JSON format
+     * @http GET /users/authenticate
+     */
+    public CompletableFuture<JsonObject> authenticateUser(String jwt) {
+        Map<String, String> cookies = new HashMap<>();
+        cookies.put("auth", jwt);
+        return sendAsyncRequest(HttpMethod.GET, "/users/authenticate", null, cookies);
     }
 }
