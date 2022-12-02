@@ -4,14 +4,18 @@ import cz.petrchatrny.sopc.entity.item.Item;
 import cz.petrchatrny.sopc.entity.item.ItemType;
 import cz.petrchatrny.sopc.entity.map.StructureType;
 import cz.petrchatrny.sopc.model.GameModel;
+import cz.petrchatrny.sopc.view.InventoryCellFactory;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -63,6 +67,10 @@ public class GameController implements Initializable {
         spaceShipBT.setOnAction(event -> buildStructure(StructureType.SPACESHIP));
         spaceStationBT.setOnAction(event -> buildStructure(StructureType.SPACESTATION));
         wormHoleBT.setOnAction(event -> buildStructure(StructureType.WORMHOLE));
+
+        ArrayList<Item> items = new ArrayList<>(model.getInventory().values());
+        inventoryLV.setCellFactory(new InventoryCellFactory());
+        inventoryLV.setItems(FXCollections.observableList(items).sorted());
     }
 
     private void processOre(ItemType type) {

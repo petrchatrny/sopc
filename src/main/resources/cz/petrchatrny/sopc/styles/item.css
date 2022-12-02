@@ -1,0 +1,9 @@
+.root {
+    -fx-background-color: white;
+    -fx-control-background: white;
+    -fx-background-image: none;
+}
+
+Label {
+    -fx-text-fill: black;
+}
