@@ -14,7 +14,7 @@
             <Label layoutX="38.0" layoutY="101.0" styleClass="heading" text="z Proxima Centauri"/>
             <ImageView fitHeight="280.0" fitWidth="271.0" layoutX="40.0" layoutY="141.0" pickOnBounds="true"
                        preserveRatio="true">
-                <Image url="@../images/proxima-centauri.gif"/>
+                <Image url="@../images/map/proxima-centauri.gif"/>
             </ImageView>
         </AnchorPane>
     </left>
