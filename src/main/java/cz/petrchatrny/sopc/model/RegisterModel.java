@@ -15,8 +15,7 @@ public class RegisterModel extends HttpModel {
     private final Predicate<String> containsSpecialChars = s -> s.matches("^.*[`!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?~].*$");
 
     /**
-     * Method validates user's input and if all goes well it calls ApiService to register new user. Otherwise, it
-     * calls resultant's error (@see Resultant) method with a corresponding message.
+     * Method validates user's input and if all goes well it calls ApiService to register new user.
      *
      * @param username       user's username
      * @param email          user's email address
@@ -35,6 +34,18 @@ public class RegisterModel extends HttpModel {
                 .exceptionallyAsync(this::processError);
     }
 
+    /**
+     * Method validates username (must be longer than 4 chars) , email (must be in correct format),
+     * password (must contain both lowercase and uppercase chars, numbers and special chars). If all goes well, it
+     * returns true. Otherwise, it calls resultant's error (@see Resultant) method with a corresponding message and
+     * returns false.
+     *
+     * @param username       user's username
+     * @param email          user's email address
+     * @param password       user's password in plaintext
+     * @param repeatPassword user's repeated password to check the first one
+     * @return if validation proceeded correctly
+     */
     private boolean validateInput(String username, String email, String password, String repeatPassword) {
         Predicate<String> passwordValidator = containsCharacters
                 .and(containsNumbers)
@@ -69,6 +80,12 @@ public class RegisterModel extends HttpModel {
         return true;
     }
 
+    /**
+     * Method calls result's method (@see Resultant) based on API response.
+     *
+     * @param json response from API
+     * @return null so it can be used as lambda
+     */
     private Object processResponse(JsonObject json) {
         // run in GUI thread
         Platform.runLater(() -> {
