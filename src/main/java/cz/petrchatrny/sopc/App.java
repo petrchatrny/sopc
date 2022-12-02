@@ -47,11 +47,8 @@ public class App extends Application {
         stage.getIcons().add(new Image(String.valueOf(url)));
 
         // show default scene
-        if (isUserInSession()) {
-            showScene(SceneType.HOME);
-        } else {
-            showScene(SceneType.LOGIN);
-        }
+        showScene(SceneType.LOADING);
+        showDefaultSceneBasedOnSessionData();
     }
 
     /**
@@ -79,6 +76,7 @@ public class App extends Application {
                 loader = new FXMLLoader(App.class.getResource("scenes/game-scene.fxml"));
                 loader.setControllerFactory(t -> new GameController());
             }
+            case LOADING -> loader = new FXMLLoader(App.class.getResource("scenes/loading-scene.fxml"));
         }
         Scene scene;
         try {

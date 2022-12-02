@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="root"
+            stylesheets="@../styles/main.css, @../styles/home.css" xmlns="http://javafx.com/javafx/17.0.2-ea">
+
+    <Label layoutX="107.0" layoutY="73.0" text="Osadníci z Proxima Centauri"/>
+    <ProgressIndicator layoutX="324.0" layoutY="224.0" prefHeight="65.0" prefWidth="65.0"/>
+</AnchorPane>
