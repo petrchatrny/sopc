@@ -2,6 +2,7 @@ package cz.petrchatrny.sopc.controller;
 
 import cz.petrchatrny.sopc.entity.item.Item;
 import cz.petrchatrny.sopc.entity.item.ItemType;
+import cz.petrchatrny.sopc.entity.item.OperationNotAllowedException;
 import cz.petrchatrny.sopc.entity.map.StructureType;
 import cz.petrchatrny.sopc.model.GameModel;
 import cz.petrchatrny.sopc.view.InventoryCellFactory;
@@ -74,7 +75,12 @@ public class GameController implements Initializable {
     }
 
     private void processOre(ItemType type) {
-        // TODO implement me
+        try {
+            model.processOre(type);
+            inventoryLV.refresh();
+        } catch (OperationNotAllowedException e) {
+            showInvalidOperationError();
+        }
     }
 
     private void craftProduct(ItemType type) {
@@ -87,5 +93,12 @@ public class GameController implements Initializable {
 
     private void buyGroxBox() {
         // TODO implement me
+    }
+
+    private void showInvalidOperationError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Chyba");
+        alert.setContentText("Operace není povolena.");
+        alert.showAndWait();
     }
 }

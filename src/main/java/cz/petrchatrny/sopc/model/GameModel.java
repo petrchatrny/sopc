@@ -1,17 +1,18 @@
 package cz.petrchatrny.sopc.model;
 
 import cz.petrchatrny.sopc.entity.item.Item;
+import cz.petrchatrny.sopc.entity.item.ItemStruct;
 import cz.petrchatrny.sopc.entity.item.ItemType;
+import cz.petrchatrny.sopc.entity.item.OperationNotAllowedException;
 import cz.petrchatrny.sopc.entity.item.element.*;
-import cz.petrchatrny.sopc.entity.item.ore.Coal;
-import cz.petrchatrny.sopc.entity.item.ore.Ice;
-import cz.petrchatrny.sopc.entity.item.ore.Magnetite;
-import cz.petrchatrny.sopc.entity.item.ore.Uraninite;
+import cz.petrchatrny.sopc.entity.item.ore.*;
 import cz.petrchatrny.sopc.entity.item.product.Fertilizer;
 import cz.petrchatrny.sopc.entity.item.product.Steel;
 import cz.petrchatrny.sopc.entity.map.StructureType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
+
+import java.util.Collection;
 
 public class GameModel {
     private final ObservableMap<ItemType, Item> inventory;
@@ -47,6 +48,26 @@ public class GameModel {
         return inventory;
     }
 
+    /**
+     * Methods access item in inventory a tries to perform process operation. If items from processing are obtained,
+     * it adds them into inventory.
+     *
+     * @param type item type
+     * @throws OperationNotAllowedException when processed item is not instance of Ore
+     * @see Ore
+     */
+    public void processOre(ItemType type) throws OperationNotAllowedException {
+        Item ore = inventory.get(type);
+        if (ore.getCount() <= 0) {
+            return;
+        }
+
+        ore.setCount(ore.getCount() - 1);
+        Collection<ItemStruct> results = ore.process();
+        for (ItemStruct res : results) {
+            inventory.get(res.type()).setCount(inventory.get(res.type()).getCount() + res.count());
+        }
+    }
 
     private void craftProduct(ItemType type) {
         // TODO implement me
