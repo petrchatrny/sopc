@@ -1,6 +1,5 @@
 package cz.petrchatrny.sopc;
 
-import com.google.gson.JsonObject;
 import cz.petrchatrny.sopc.controller.GameController;
 import cz.petrchatrny.sopc.controller.HomeController;
 import cz.petrchatrny.sopc.controller.LoginController;
@@ -10,6 +9,7 @@ import cz.petrchatrny.sopc.model.RegisterModel;
 import cz.petrchatrny.sopc.service.ApiService;
 import cz.petrchatrny.sopc.service.SessionService;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Main class of JavaFX application.
@@ -92,21 +90,30 @@ public class App extends Application {
 
     /**
      * Method checks if application's session file exits. If yes, it sends HTTP request for authentication user in API.
-     *
-     * @return if user's authentication stored in session file is valid
      */
-    private static boolean isUserInSession() {
+    private static void showDefaultSceneBasedOnSessionData() {
         String jwt = SessionService.getINSTANCE().getJwt();
         if (jwt == null) {
-            return false;
+            showScene(SceneType.LOGIN);
+            return;
         }
 
-        CompletableFuture<JsonObject> res = ApiService.getInstance().authenticateUser(jwt);
-        try {
-            JsonObject json = res.get();
-            return json.get("message").getAsString().equals("success");
-        } catch (InterruptedException | ExecutionException e) {
-            return false;
-        }
+        // send async HTTP request in a new thread
+        ApiService.getInstance()
+                .authenticateUser(jwt)
+                .thenApplyAsync(json -> {
+                    Platform.runLater(() -> { // run in GUI thread
+                        if (json.get("message").getAsString().equals("success")) {
+                            showScene(SceneType.HOME);
+                        } else {
+                            showScene(SceneType.LOGIN);
+                        }
+                    });
+                    return null;
+                }).exceptionallyAsync(throwable -> {
+                    Platform.runLater(() -> // run in GUI thread
+                            showScene(SceneType.LOGIN));
+                    return null;
+                });
     }
 }

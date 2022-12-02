@@ -1,11 +1,9 @@
 package cz.petrchatrny.sopc.model;
 
-import com.google.gson.JsonObject;
 import cz.petrchatrny.sopc.controller.Resultant;
 import cz.petrchatrny.sopc.service.ApiService;
-import javafx.concurrent.Task;
+import javafx.application.Platform;
 
-import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 
 public class RegisterModel {
@@ -58,32 +56,24 @@ public class RegisterModel {
             return;
         }
 
-        // create asynchronous task
-        ApiService apiService = ApiService.getInstance();
-        final Task<JsonObject> task = new Task<>() {
-            @Override
-            public JsonObject call() {
-                try {
-                    return apiService.userRegister(username, email, password).get();
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
+        // send async HTTP request in a new thread
+        ApiService.getInstance()
+                .userRegister(username, email, password)
+                .thenApplyAsync(json -> {
+                    Platform.runLater(() -> {  // run in GUI thread
+                        switch (json.get("message").getAsString()) {
+                            case "success" -> resultant.onTaskSucceeded();
+                            case "email-in-use" -> resultant.onTaskFailed("Tato emailová adresa je již obsazena.");
+                            case "username-in-use" -> resultant.onTaskFailed("Toto uživatelské jméno je již obsazeno.");
+                        }
+                    });
+                    return null;
+                }).exceptionally(throwable -> {
+                    Platform.runLater(() ->  // run in GUI thread
+                            resultant.onTaskFailed(StringConst.INTERNET_ERR_MSG));
+                    return null;
+                });
 
-        // set task's result
-        task.setOnSucceeded(event -> {
-            JsonObject result = task.getValue();
-            switch (result.get("message").getAsString()) {
-                case "success" -> resultant.onTaskSucceeded();
-                case "email-in-use" -> resultant.onTaskFailed("Tato emailová adresa je již obsazena.");
-                case "username-in-use" -> resultant.onTaskFailed("Toto uživatelské jméno je již obsazeno.");
-            }
-        });
-        task.setOnFailed(event -> resultant.onTaskFailed(StringConst.INTERNET_ERR_MSG));
-
-        // start async task
-        new Thread(task).start();
     }
 
     public void setResultant(Resultant resultant) {
