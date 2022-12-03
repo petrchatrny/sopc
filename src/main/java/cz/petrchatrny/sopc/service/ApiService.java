@@ -68,6 +68,7 @@ public class ApiService {
      * @see HttpMethod
      */
     private CompletableFuture<JsonObject> sendAsyncRequest(HttpMethod method, String route, JsonObject data, Map<String, String> cookies) {
+        // setup request
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + route))
                 .timeout(Duration.ofSeconds(10))
@@ -79,13 +80,15 @@ public class ApiService {
             }
         }
 
-        HttpRequest request = switch (method) {
-            case GET -> requestBuilder.GET().build();
-            case POST -> requestBuilder.POST(HttpRequest.BodyPublishers.ofString(data.toString())).build();
-            case PUT -> requestBuilder.PUT(HttpRequest.BodyPublishers.ofString(data.toString())).build();
-            case DELETE -> requestBuilder.DELETE().build();
-        };
+        switch (method) {
+            case GET -> requestBuilder.GET();
+            case POST -> requestBuilder.POST(HttpRequest.BodyPublishers.ofString(data.toString()));
+            case PUT -> requestBuilder.PUT(HttpRequest.BodyPublishers.ofString(data.toString()));
+            case DELETE -> requestBuilder.DELETE();
+        }
+        HttpRequest request = requestBuilder.build();
 
+        // send request
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenApply(jsonParser);

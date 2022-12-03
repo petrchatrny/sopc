@@ -77,6 +77,7 @@ public class App extends Application {
             }
             case LOADING -> loader = new FXMLLoader(App.class.getResource("scenes/loading-scene.fxml"));
         }
+
         Scene scene;
         try {
             Parent root = loader.load();

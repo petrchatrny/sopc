@@ -49,7 +49,7 @@ public class GameModel {
     }
 
     /**
-     * Methods access item in inventory a tries to perform process operation. If items from processing are obtained,
+     * Methods access item in inventory and tries to perform process operation. If items from processing are obtained,
      * it adds them into inventory.
      *
      * @param type item type
@@ -84,6 +84,7 @@ public class GameModel {
         for (ItemStruct requiredResource : requiredResources) {
             if (inventory.get(requiredResource.type()).getCount() < requiredResource.count()) {
                 canCraft = false;
+                break;
             }
         }
 
