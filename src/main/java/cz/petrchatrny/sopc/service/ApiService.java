@@ -60,11 +60,12 @@ public class ApiService {
      * Method for sending asynchronous requests from client to API. Response data are accepted as JsonObject in
      * CompletableFuture. In case of POST and PUT request is method able to send JSON data inside request body.
      *
-     * @param method  HTTP method @see HttpMethod
+     * @param method  HTTP method
      * @param route   specific route of API
      * @param data    json data to send inside the request body
      * @param cookies map of http cookies
      * @return API response in JSON format
+     * @see HttpMethod
      */
     private CompletableFuture<JsonObject> sendAsyncRequest(HttpMethod method, String route, JsonObject data, Map<String, String> cookies) {
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
