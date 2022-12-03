@@ -69,8 +69,31 @@ public class GameModel {
         }
     }
 
-    private void craftProduct(ItemType type) {
-        // TODO implement me
+    /**
+     * Method access item in inventory and tries to create it. If all goes well, required items for creating this one
+     * will be deducted from inventory
+     *
+     * @param type item to create
+     * @throws OperationNotAllowedException when created item cannot be crafted
+     */
+    public void craftProduct(ItemType type) throws OperationNotAllowedException {
+        Item product = inventory.get(type);
+        Collection<ItemStruct> requiredResources = product.requiredResources();
+
+        boolean canCraft = true;
+        for (ItemStruct requiredResource : requiredResources) {
+            if (inventory.get(requiredResource.type()).getCount() < requiredResource.count()) {
+                canCraft = false;
+            }
+        }
+
+        if (canCraft) {
+            requiredResources.forEach(requiredResource -> {
+                Item resource = inventory.get(requiredResource.type());
+                resource.setCount(resource.getCount() - requiredResource.count());
+            });
+            product.setCount(product.getCount() + 1);
+        }
     }
 
     private void buildStructure(StructureType type) {

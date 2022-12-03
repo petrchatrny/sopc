@@ -90,7 +90,12 @@ public class GameController implements Initializable {
     }
 
     private void craftProduct(ItemType type) {
-        // TODO implement me
+        try {
+            model.craftProduct(type);
+            inventoryLV.refresh();
+        } catch (OperationNotAllowedException e) {
+            showInvalidOperationError();
+        }
     }
 
     private void buildStructure(StructureType type) {
