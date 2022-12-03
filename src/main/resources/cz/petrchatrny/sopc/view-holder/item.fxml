@@ -5,8 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox fx:id="view" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" styleClass="root"
-      stylesheets="@../styles/item.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
+<HBox fx:id="view" styleClass="root" stylesheets="@../styles/item.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
       xmlns:fx="http://javafx.com/fxml/1">
     <ImageView fx:id="image" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../images/items/magnetite.png"/>
@@ -15,11 +14,7 @@
         </HBox.margin>
     </ImageView>
     <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="Infinity" HBox.hgrow="ALWAYS">
-        <Label fx:id="name" text="null" styleClass="name">
-        </Label>
-        <Label fx:id="count" text="null" styleClass="count"/>
+        <Label fx:id="name" text="null"/>
+        <Label fx:id="count" text="null"/>
     </VBox>
-    <opaqueInsets>
-        <Insets/>
-    </opaqueInsets>
 </HBox>

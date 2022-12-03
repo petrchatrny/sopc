@@ -1,9 +1,16 @@
 .root {
-    -fx-background-color: white;
+    -fx-background-color: #04103a;
     -fx-control-background: white;
     -fx-background-image: none;
+    -fx-alignment: center-left;
+    -fx-padding: 10;
+}
+
+.root:filled:selected {
+    -fx-background-color: gray;
+    -fx-background-insets: 0;
 }
 
 Label {
-    -fx-text-fill: black;
+
 }

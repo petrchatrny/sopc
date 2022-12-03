@@ -7,11 +7,13 @@ import cz.petrchatrny.sopc.entity.map.StructureType;
 import cz.petrchatrny.sopc.model.GameModel;
 import cz.petrchatrny.sopc.view.InventoryCellFactory;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -69,6 +71,10 @@ public class GameController implements Initializable {
         spaceStationBT.setOnAction(event -> buildStructure(StructureType.SPACESTATION));
         wormHoleBT.setOnAction(event -> buildStructure(StructureType.WORMHOLE));
 
+        // disable selection of item in listview
+        inventoryLV.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
+
+        // add items to inventory
         ArrayList<Item> items = new ArrayList<>(model.getInventory().values());
         inventoryLV.setCellFactory(new InventoryCellFactory());
         inventoryLV.setItems(FXCollections.observableList(items).sorted());

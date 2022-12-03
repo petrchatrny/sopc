@@ -19,3 +19,35 @@
     -fx-spacing: 20;
     -fx-padding: 20;
 }
+
+ListView {
+    -fx-background-color: #04103a;
+    -fx-effect: innershadow(three-pass-box, #ffffff, 2, 0, 0, 0);
+    -fx-border-radius: 2;
+}
+
+.list-cell {
+    -fx-padding: 0;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: -fx-background;
+    -fx-background-insets: 0;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.list-view .increment-button,
+.list-view .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-padding: 0 10 0 0;
+}
+
+.list-view .increment-arrow,
+.list-view .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
