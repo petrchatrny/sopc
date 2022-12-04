@@ -48,6 +48,12 @@ public class App extends Application {
         // show default scene
         showScene(SceneType.LOADING);
         showDefaultSceneBasedOnSessionData();
+
+        // close http client after GUI close
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     /**
