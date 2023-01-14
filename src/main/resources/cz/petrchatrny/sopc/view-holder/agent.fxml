@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<AnchorPane fx:id="agent" prefHeight="120.0" prefWidth="250.0" stylesheets="@../styles/agent-view-holder.css"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Circle fx:id="color" layoutX="35.0" layoutY="31.0" radius="15.0" strokeType="INSIDE"/>
+    <Label fx:id="usernameLB" layoutX="65.0" layoutY="21.0" text="Null"/>
+    <FontIcon fx:id="flagIC" iconColor="WHITE" iconLiteral="far-flag" iconSize="24" layoutX="190.0" layoutY="40.0"/>
+
+    <!-- SPACE STATIONS COUNT -->
+    <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="17.0" layoutY="70.0">
+        <Image url="@../images/structures/space-station.png"/>
+    </ImageView>
+    <Label fx:id="spaceStationsLB" graphicTextGap="0.0" layoutX="60.0" layoutY="80.0" text="07"/>
+    <Label layoutX="80.0" layoutY="80.0" text="/"/>
+    <Label fx:id="spaceStationsMaxLB" layoutX="87.0" layoutY="80.0" text="10"/>
+
+    <!-- SPACESHIPS COUNT -->
+    <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="125.0" layoutY="70.0">
+        <Image url="@../images/structures/space-ship.png"/>
+    </ImageView>
+    <Label fx:id="spaceShipsLB" layoutX="168.0" layoutY="80.0" text="10"/>
+    <Label layoutX="188.0" layoutY="80.0" text="/"/>
+    <Label fx:id="spaceShipsMaxLB" layoutX="195.0" layoutY="80.0" text="10"/>
+</AnchorPane>

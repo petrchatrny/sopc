@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 public class HomeController {
     @FXML
     private void onSinglePlayerSelected(ActionEvent actionEvent) {
-        App.showScene(SceneType.GAME);
+        App.showScene(SceneType.SINGLE_PLAYER_GAME);
     }
 
     @FXML

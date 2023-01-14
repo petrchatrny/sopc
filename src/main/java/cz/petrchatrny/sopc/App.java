@@ -4,7 +4,7 @@ import cz.petrchatrny.sopc.controller.GameController;
 import cz.petrchatrny.sopc.controller.HomeController;
 import cz.petrchatrny.sopc.controller.LoginController;
 import cz.petrchatrny.sopc.controller.RegisterController;
-import cz.petrchatrny.sopc.model.GameModel;
+import cz.petrchatrny.sopc.model.SinglePlayerModel;
 import cz.petrchatrny.sopc.model.LoginModel;
 import cz.petrchatrny.sopc.model.RegisterModel;
 import cz.petrchatrny.sopc.service.ApiService;
@@ -77,9 +77,15 @@ public class App extends Application {
                 loader = new FXMLLoader(App.class.getResource("scenes/home-scene.fxml"));
                 loader.setControllerFactory(t -> new HomeController());
             }
-            case GAME -> {
+            case LOBBY -> {
+                // TODO lobby for multiplayer
+            }
+            case SINGLE_PLAYER_GAME -> {
                 loader = new FXMLLoader(App.class.getResource("scenes/game-scene.fxml"));
-                loader.setControllerFactory(t -> new GameController(new GameModel()));
+                loader.setControllerFactory(t -> new GameController(new SinglePlayerModel()));
+            }
+            case MULTI_PLAYER_GAME -> {
+                // TODO multiplayer
             }
             case LOADING -> loader = new FXMLLoader(App.class.getResource("scenes/loading-scene.fxml"));
         }
