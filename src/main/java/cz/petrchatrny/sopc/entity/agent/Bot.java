@@ -1,12 +1,17 @@
 package cz.petrchatrny.sopc.entity.agent;
 
+import cz.petrchatrny.sopc.controller.TurnChangeListener;
+
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 public class Bot extends Agent {
-    public Bot(Color color) {
+    private TurnChangeListener turnChangeListener;
+
+    public Bot(Color color, TurnChangeListener turnChangeListener) {
         super(UUID.randomUUID().toString(), color, randomUsername());
+        this.turnChangeListener = turnChangeListener;
     }
 
     private static String randomUsername() {
@@ -17,10 +22,19 @@ public class Bot extends Agent {
 
     @Override
     public void onTurnStarted() {
-        // TODO do something smart
+        // TODO implement BOT logic
         setOnTurn(true);
-        increaseSpaceShips();
-        increaseSpaceStations();
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                turnChangeListener.onTurnChanged(false);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (RuntimeException e) {
+                // TODO Not on FX application thread
+            }
+        });
+        thread.start();
     }
 
     @Override

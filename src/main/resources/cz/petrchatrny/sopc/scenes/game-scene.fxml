@@ -3,167 +3,220 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-<AnchorPane maxHeight="750.0" maxWidth="1200.0" prefHeight="750.0" prefWidth="1200.0" styleClass="root" stylesheets="@../styles/main.css, @../styles/game.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.petrchatrny.sopc.controller.GameController">
+<AnchorPane maxHeight="750.0" maxWidth="1200.0" prefHeight="750.0" prefWidth="1200.0" styleClass="root"
+            stylesheets="@../styles/main.css, @../styles/game.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.petrchatrny.sopc.controller.GameController">
 
     <!-- PLAYERS -->
-    <HBox fx:id="playersHB" styleClass="players" />
+    <HBox fx:id="playersHB" styleClass="players"/>
 
     <!-- MAP -->
-    <AnchorPane fx:id="map" layoutY="150.0" prefHeight="434.0" prefWidth="995.0" styleClass="map">
-        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="695.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/umbria200.gif" />
+    <Pane fx:id="map" layoutY="150.0" prefHeight="434.0" prefWidth="995.0" styleClass="map">
+        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="695.0" layoutY="205.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/umbria200.gif"/>
         </ImageView>
-        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="500.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/florana200.gif" />
+        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="500.0" layoutY="95.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/florana200.gif"/>
         </ImageView>
-        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="380.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/maraxus200.gif" />
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="380.0" layoutY="105.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/maraxus200.gif"/>
         </ImageView>
-        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="640.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/zagreus200.gif" />
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="640.0" layoutY="105.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/zagreus200.gif"/>
         </ImageView>
-        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="280.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/comet.gif" />
+        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="280.0" layoutY="180.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/comet.gif"/>
         </ImageView>
-        <ImageView fitHeight="97.0" fitWidth="90.0" layoutX="550.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/grox-space-craft.png" />
+        <ImageView fitHeight="97.0" fitWidth="90.0" layoutX="550.0" layoutY="190.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/grox-space-craft.png"/>
         </ImageView>
-        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="450.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" rotate="180">
-            <Image url="@../images/map/comet.gif" />
+        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="450.0" layoutY="300.0" pickOnBounds="true"
+                   preserveRatio="true" rotate="180">
+            <Image url="@../images/map/comet.gif"/>
         </ImageView>
-        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="360.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/asteroid1.png" />
+        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="360.0" layoutY="310.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/asteroid1.png"/>
         </ImageView>
-        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="620.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/asteroid2.png" />
+        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="620.0" layoutY="310.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/asteroid2.png"/>
         </ImageView>
-        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="390.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/map/proxima-centauri.gif" />
+        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="390.0" layoutY="160.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/map/proxima-centauri.gif"/>
         </ImageView>
-    </AnchorPane>
+    </Pane>
 
     <!-- INVENTORY -->
-    <Label layoutX="930.0" layoutY="180.0" text="Inventář" />
-    <ListView fx:id="inventoryLV" layoutX="930.0" layoutY="204.0" prefHeight="526.0" prefWidth="250.0" />
+    <Label layoutX="930.0" layoutY="180.0" text="Inventář"/>
+    <ListView fx:id="inventoryLV" layoutX="930.0" layoutY="204.0" prefHeight="526.0" prefWidth="250.0"/>
 
-    <!-- ORE BUTTONS -->
-    <Label layoutX="12.0" layoutY="649.0" text="Zpracování rud" />
-    <GridPane alignment="CENTER" hgap="8.0" layoutX="8.0" layoutY="670.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="215.0">
-        <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-        </rowConstraints>
+    <Pane fx:id="controlPanel">
+        <!-- ORE BUTTONS -->
+        <Label layoutX="12.0" layoutY="649.0" text="Zpracování rud"/>
+        <GridPane alignment="CENTER" hgap="8.0" layoutX="8.0" layoutY="670.0" nodeOrientation="LEFT_TO_RIGHT"
+                  prefHeight="60.0" prefWidth="215.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES"/>
+            </rowConstraints>
 
-        <Button fx:id="magnetiteBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Magnetit">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/items/magnetite.png" />
-                </ImageView>
-            </graphic>
-        </Button>
+            <Button fx:id="magnetiteBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Magnetit">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/items/magnetite.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
-        <Button fx:id="coalBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Uhlí" GridPane.columnIndex="1">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/items/coal.png" />
-                </ImageView>
-            </graphic>
-        </Button>
+            <Button fx:id="coalBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Uhlí" GridPane.columnIndex="1">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/items/coal.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
-        <Button fx:id="iceBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Led" GridPane.columnIndex="2">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/items/ice.png" />
-                </ImageView>
-            </graphic>
-        </Button>
+            <Button fx:id="iceBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Led"
+                    GridPane.columnIndex="2">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/items/ice.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
-        <Button fx:id="uraniniteBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Smolinec" GridPane.columnIndex="3">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/items/uraninite.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-    </GridPane>
+            <Button fx:id="uraniniteBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Smolinec" GridPane.columnIndex="3">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/items/uraninite.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </GridPane>
 
-    <!-- CRAFTING BUTTONS -->
-    <Label layoutX="270.0" layoutY="649.0" text="Výroba a nakupování" />
-    <GridPane alignment="CENTER" hgap="8.0" layoutX="242.0" layoutY="670.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="215.0">
-        <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-        </rowConstraints>
+        <!-- CRAFTING BUTTONS -->
+        <Label layoutX="270.0" layoutY="649.0" text="Výroba a nakupování"/>
+        <GridPane alignment="CENTER" hgap="8.0" layoutX="242.0" layoutY="670.0" nodeOrientation="LEFT_TO_RIGHT"
+                  prefHeight="60.0" prefWidth="215.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES"/>
+            </rowConstraints>
 
-        <Button fx:id="steelBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Ocel">
-            <graphic>
-                <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/items/steel.png" />
-                </ImageView>
-            </graphic>
-        </Button>
+            <Button fx:id="steelBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Ocel">
+                <graphic>
+                    <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/items/steel.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
-        <Button fx:id="fertilizerBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Hnojivo" GridPane.columnIndex="1">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/items/fertilizer.png" />
-                </ImageView>
-            </graphic>
-        </Button>
+            <Button fx:id="fertilizerBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Hnojivo" GridPane.columnIndex="1">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/items/fertilizer.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
-        <Button fx:id="groxBoxBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Hrubešovská bedna" GridPane.columnIndex="2">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/items/grox-box.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-    </GridPane>
+            <Button fx:id="groxBoxBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Hrubešovská bedna" GridPane.columnIndex="2">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/items/grox-box.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </GridPane>
 
-    <!-- BUILDING BUTTONS -->
-    <Label layoutX="512.0" layoutY="649.0" text="Stavění" />
-    <GridPane alignment="CENTER" hgap="8.0" layoutX="480.0" layoutY="670.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="215.0">
-        <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-        </rowConstraints>
+        <!-- BUILDING BUTTONS -->
+        <Label layoutX="512.0" layoutY="649.0" text="Stavění"/>
+        <GridPane alignment="CENTER" hgap="8.0" layoutX="512.0" layoutY="670.0" nodeOrientation="LEFT_TO_RIGHT"
+                  prefHeight="60.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES"/>
+            </rowConstraints>
 
-        <Button fx:id="spaceStationBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Vesmírná stanice">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/structures/space-station.png" />
-                </ImageView>
-            </graphic>
-        </Button>
+            <Button fx:id="spaceStationBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                    styleClass="image-button"
+                    text="Vesmírná stanice">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/structures/space-station.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
-        <Button fx:id="spaceShipBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Vesmírná loď" GridPane.columnIndex="1">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/structures/space-ship.png" />
-                </ImageView>
-            </graphic>
-        </Button>
+            <Button fx:id="spaceShipBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Vesmírná loď" GridPane.columnIndex="1">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/structures/space-ship.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
-        <Button fx:id="wormHoleBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button" text="Červí díra" GridPane.columnIndex="2">
-            <graphic>
-                <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../images/structures/wormhole.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-    </GridPane>
+            <Button fx:id="wormHoleBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Červí díra" GridPane.columnIndex="2">
+                <graphic>
+                    <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/structures/wormhole.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </GridPane>
+
+        <!-- PLAYING BUTTONS -->
+        <Label layoutX="730.0" layoutY="649.0" text="Hra"/>
+        <GridPane alignment="CENTER" hgap="8.0" layoutX="730.0" layoutY="670.0" nodeOrientation="LEFT_TO_RIGHT"
+                  prefHeight="60.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES"/>
+            </rowConstraints>
+
+            <Button fx:id="diceBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
+                    text="Hod kostkou" GridPane.columnIndex="0">
+                <graphic>
+                    <FontIcon iconColor="white" iconLiteral="fas-dice-d20" iconSize="26"/>
+                </graphic>
+            </Button>
+
+            <Button fx:id="nextTurnBT" mnemonicParsing="false" text="Ukončit tah" GridPane.columnIndex="1"/>
+
+        </GridPane>
+    </Pane>
 </AnchorPane>

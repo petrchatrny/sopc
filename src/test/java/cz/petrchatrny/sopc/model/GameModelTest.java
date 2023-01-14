@@ -9,27 +9,27 @@ class GameModelTest {
 
     @Test
     void processOre() throws OperationNotAllowedException {
-        GameModel model = new GameModel();
+        SinglePlayerModel model = new SinglePlayerModel();
 
-        model.getInventory().get(ItemType.COAL).setCount(1);
-        model.getInventory().get(ItemType.CARBON).setCount(0);
+        model.getLocalPlayerInventory().get(ItemType.COAL).setCount(1);
+        model.getLocalPlayerInventory().get(ItemType.CARBON).setCount(0);
 
         model.processOre(ItemType.COAL);
-        assert model.getInventory().get(ItemType.CARBON).getCount() > 1;
+        assert model.getLocalPlayerInventory().get(ItemType.CARBON).getCount() > 1;
     }
 
     @Test
     void craftProduct() throws OperationNotAllowedException {
-        GameModel model = new GameModel();
+        SinglePlayerModel model = new SinglePlayerModel();
 
-        model.getInventory().get(ItemType.IRON).setCount(100);
-        model.getInventory().get(ItemType.CARBON).setCount(100);
-        model.getInventory().get(ItemType.STEEL).setCount(0);
+        model.getLocalPlayerInventory().get(ItemType.IRON).setCount(100);
+        model.getLocalPlayerInventory().get(ItemType.CARBON).setCount(100);
+        model.getLocalPlayerInventory().get(ItemType.STEEL).setCount(0);
 
         model.craftProduct(ItemType.STEEL);
 
-        assert model.getInventory().get(ItemType.CARBON).getCount() < 100;
-        assert model.getInventory().get(ItemType.IRON).getCount() < 100;
-        assert model.getInventory().get(ItemType.STEEL).getCount() > 0;
+        assert model.getLocalPlayerInventory().get(ItemType.CARBON).getCount() < 100;
+        assert model.getLocalPlayerInventory().get(ItemType.IRON).getCount() < 100;
+        assert model.getLocalPlayerInventory().get(ItemType.STEEL).getCount() > 0;
     }
 }

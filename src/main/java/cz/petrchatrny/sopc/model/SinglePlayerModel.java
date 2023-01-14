@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class SinglePlayerModel {
-    private final ObservableMap<String, Agent> players;
+    private final ObservableMap<String, Agent> agents;
     private final Queue<String> queue;
     private final String LOCAL_PLAYER_ID = SessionService.getINSTANCE().getLocalUserId();
     private String playerOnTurnId;
@@ -30,38 +30,42 @@ public class SinglePlayerModel {
 
     public SinglePlayerModel() {
         // add player
-        this.players = FXCollections.observableHashMap();
-        this.players.put(LOCAL_PLAYER_ID, new Player(LOCAL_PLAYER_ID, Color.BLUE, "Prion"));
+        this.agents = FXCollections.observableHashMap();
+        this.agents.put(LOCAL_PLAYER_ID, new Player(LOCAL_PLAYER_ID, Color.BLUE, "Prion"));
 
         // add bots
-        List<Agent> bots = List.of(new Bot(Color.RED), new Bot(Color.GREEN), new Bot(Color.GRAY));
-        bots.forEach(agent -> players.put(agent.getId(), agent));
+        List<Agent> bots = List.of(
+                new Bot(Color.RED, isLocalPlayerOnTurn -> nextTurn()),
+                new Bot(Color.GREEN, isLocalPlayerOnTurn -> nextTurn()),
+                new Bot(Color.GRAY, isLocalPlayerOnTurn -> nextTurn())
+        );
+        bots.forEach(agent -> agents.put(agent.getId(), agent));
 
         // setup queue
         this.queue = new LinkedList<>();
         this.queue.addAll(
-                this.players.values()
+                this.agents.values()
                         .stream()
                         .map(Agent::getId)
                         .toList()
         );
 
         // first player on turn
-        Agent first = this.players.get(queue.remove());
+        Agent first = this.agents.get(queue.remove());
         playerOnTurnId = first.getId();
         first.onTurnStarted();
     }
 
     public void nextTurn() {
-        players.get(playerOnTurnId).onTurnEnded();
+        agents.get(playerOnTurnId).onTurnEnded();
         queue.add(playerOnTurnId);
         playerOnTurnId = queue.remove();
-        players.get(playerOnTurnId).onTurnStarted();
+        agents.get(playerOnTurnId).onTurnStarted();
         turnChangeListener.onTurnChanged(isLocalPlayerOnTurn());
     }
 
     public ObservableMap<ItemType, Item> getLocalPlayerInventory() {
-        return this.players.get(LOCAL_PLAYER_ID).getInventory().getItems();
+        return this.agents.get(LOCAL_PLAYER_ID).getInventory().getItems();
     }
 
     /**
@@ -73,7 +77,7 @@ public class SinglePlayerModel {
      * @see Ore
      */
     public void processOre(ItemType type) throws OperationNotAllowedException {
-        ObservableMap<ItemType, Item> inventory = players.get(playerOnTurnId).getInventory().getItems();
+        ObservableMap<ItemType, Item> inventory = agents.get(playerOnTurnId).getInventory().getItems();
         Item ore = inventory.get(type);
         if (ore.getCount() <= 0) {
             return;
@@ -94,7 +98,7 @@ public class SinglePlayerModel {
      * @throws OperationNotAllowedException when created item cannot be crafted
      */
     public void craftProduct(ItemType type) throws OperationNotAllowedException {
-        ObservableMap<ItemType, Item> inventory = players.get(playerOnTurnId).getInventory().getItems();
+        ObservableMap<ItemType, Item> inventory = agents.get(playerOnTurnId).getInventory().getItems();
         Item product = inventory.get(type);
         Collection<ItemStruct> requiredResources = product.requiredResources();
 
@@ -123,8 +127,8 @@ public class SinglePlayerModel {
         // TODO implement me
     }
 
-    public ObservableList<Agent> getPlayers() {
-        return FXCollections.observableArrayList(players.values());
+    public ObservableList<Agent> getAgents() {
+        return FXCollections.observableArrayList(agents.values());
     }
 
     private boolean isLocalPlayerOnTurn() {
