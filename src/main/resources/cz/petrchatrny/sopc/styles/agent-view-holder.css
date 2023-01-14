@@ -1,0 +1,13 @@
+#agent {
+    -fx-effect: innershadow(three-pass-box, #ffffff, 2, 0, 0, 0);
+    -fx-border-radius: 2;
+    -fx-background-color: #04103a;
+}
+
+Label {
+    -fx-fill: white;
+}
+
+#color {
+    -fx-stroke: white;
+}
