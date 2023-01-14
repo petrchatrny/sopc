@@ -16,8 +16,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.AudioClip;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -31,6 +34,7 @@ public class App extends Application {
      * stage of application for scene changing
      */
     private static Stage stage;
+    private static AudioClip mediaPlayer;
 
     public static void main(String[] args) {
         launch();
@@ -44,6 +48,9 @@ public class App extends Application {
         // app icon
         URL url = getClass().getResource("images/icon.png");
         stage.getIcons().add(new Image(String.valueOf(url)));
+
+        // default music
+        playMusic("sample1.mp3");
 
         // show default scene
         showScene(SceneType.LOADING);
@@ -83,6 +90,7 @@ public class App extends Application {
             case SINGLE_PLAYER_GAME -> {
                 loader = new FXMLLoader(App.class.getResource("scenes/game-scene.fxml"));
                 loader.setControllerFactory(t -> new GameController(new SinglePlayerModel()));
+                playMusic("sample2.mp3");
             }
             case MULTI_PLAYER_GAME -> {
                 // TODO multiplayer
@@ -129,5 +137,21 @@ public class App extends Application {
                             showScene(SceneType.LOGIN));
                     return null;
                 });
+    }
+
+    private static void playMusic(String songName) {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+        URL url = App.class.getResource("music/" + songName);
+        try {
+            if (url != null) {
+                Media media = new Media(url.toURI().toString());
+                mediaPlayer = new AudioClip(media.getSource());
+                mediaPlayer.play();
+            }
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
