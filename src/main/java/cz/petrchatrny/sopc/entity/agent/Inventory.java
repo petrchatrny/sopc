@@ -17,9 +17,10 @@ public class Inventory {
 
     public Inventory() {
         this.items = FXCollections.observableHashMap();
-        for (ItemType type : ItemType.values()) {
-            items.put(type, getDefaultItemByType(type));
-        }
+
+        Arrays.stream(ItemType.values())
+                .filter(itemType -> itemType != ItemType.NONE)
+                .forEach(itemType -> items.put(itemType, getDefaultItemByType(itemType)));
     }
 
     private Item getDefaultItemByType(ItemType type) {

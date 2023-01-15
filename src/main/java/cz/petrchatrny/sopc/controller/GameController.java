@@ -3,9 +3,12 @@ package cz.petrchatrny.sopc.controller;
 import cz.petrchatrny.sopc.entity.item.Item;
 import cz.petrchatrny.sopc.entity.item.ItemType;
 import cz.petrchatrny.sopc.entity.item.OperationNotAllowedException;
-import cz.petrchatrny.sopc.view.map.*;
+import cz.petrchatrny.sopc.entity.map.MapStructureClickListener;
+import cz.petrchatrny.sopc.entity.map.StructureType;
 import cz.petrchatrny.sopc.model.SinglePlayerModel;
 import cz.petrchatrny.sopc.model.Settings;
+import cz.petrchatrny.sopc.view.Cell;
+import cz.petrchatrny.sopc.view.Edge;
 import cz.petrchatrny.sopc.view.InventoryCellFactory;
 import cz.petrchatrny.sopc.view.AgentViewHolder;
 import javafx.collections.FXCollections;
@@ -67,8 +70,8 @@ public class GameController implements Initializable, TurnChangeListener {
         diceBT.setOnAction(event -> rollDice());
         nextTurnBT.setOnAction(event -> model.nextTurn());
 
-        // hide control panel
-        controlPanel.setVisible(false);
+        // show map
+        map.getChildren().add(model.getMapPlan().getCanvas());
 
         // disable selection of item in listview
         inventoryLV.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);

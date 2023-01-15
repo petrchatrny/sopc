@@ -1,6 +1,7 @@
 package cz.petrchatrny.sopc.entity.item;
 
 public enum ItemType {
+    NONE(0),
     MAGNETITE(10),
     COAL(5),
     ICE(2),

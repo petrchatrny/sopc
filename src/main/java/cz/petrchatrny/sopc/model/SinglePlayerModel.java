@@ -9,9 +9,14 @@ import cz.petrchatrny.sopc.entity.item.ore.*;
 import cz.petrchatrny.sopc.entity.agent.Agent;
 import cz.petrchatrny.sopc.entity.agent.Bot;
 import cz.petrchatrny.sopc.entity.agent.Color;
-import cz.petrchatrny.sopc.view.map.StructureType;
+import cz.petrchatrny.sopc.entity.map.Area;
+import cz.petrchatrny.sopc.entity.map.Map;
+import cz.petrchatrny.sopc.entity.map.MapStructure;
+import cz.petrchatrny.sopc.entity.map.StructureType;
 import cz.petrchatrny.sopc.entity.agent.Player;
 import cz.petrchatrny.sopc.service.SessionService;
+import cz.petrchatrny.sopc.view.Cell;
+import cz.petrchatrny.sopc.view.Edge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -27,6 +32,7 @@ public class SinglePlayerModel {
     private final String LOCAL_PLAYER_ID = SessionService.getINSTANCE().getLocalUserId();
     private String playerOnTurnId;
     private TurnChangeListener turnChangeListener;
+    private Map mapPlan;
 
     public SinglePlayerModel() {
         // add player
@@ -49,6 +55,9 @@ public class SinglePlayerModel {
                         .map(Agent::getId)
                         .toList()
         );
+
+        // setup map
+        mapPlan = new Map(400, 50, getAgents());
 
         // first player on turn
         Agent first = this.agents.get(queue.remove());
@@ -137,5 +146,9 @@ public class SinglePlayerModel {
 
     public void setTurnChangeListener(TurnChangeListener turnChangeListener) {
         this.turnChangeListener = turnChangeListener;
+    }
+
+    public Map getMapPlan() {
+        return mapPlan;
     }
 }

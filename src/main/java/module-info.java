@@ -15,6 +15,7 @@ module cz.petrchatrny.sopc {
     exports cz.petrchatrny.sopc.model;
     exports cz.petrchatrny.sopc.entity.item;
     exports cz.petrchatrny.sopc.entity.agent;
+    exports cz.petrchatrny.sopc.entity.map;
     exports cz.petrchatrny.sopc.view;
     opens cz.petrchatrny.sopc.controller to javafx.fxml;
 }
