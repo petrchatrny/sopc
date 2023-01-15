@@ -25,23 +25,27 @@ public class Inventory {
                 .forEach(itemType -> items.put(itemType, getDefaultItemByType(itemType)));
     }
 
-    private Item getDefaultItemByType(ItemType type) {
-        return switch (type) {
-            case MAGNETITE -> new Magnetite(type.getDEFAULT_COUNT());
-            case COAL -> new Coal(type.getDEFAULT_COUNT());
-            case ICE -> new Ice(type.getDEFAULT_COUNT());
-            case URANINITE -> new Uraninite(type.getDEFAULT_COUNT());
-            case IRON -> new Iron(type.getDEFAULT_COUNT());
-            case CARBON -> new Carbon(type.getDEFAULT_COUNT());
-            case SULFUR -> new Sulfur(type.getDEFAULT_COUNT());
-            case OXYGEN -> new Oxygen(type.getDEFAULT_COUNT());
-            case HYDROGEN -> new Hydrogen(type.getDEFAULT_COUNT());
-            case URANIUM -> new Uranium(type.getDEFAULT_COUNT());
-            case DARK_MATTER -> new DarkMatter(type.getDEFAULT_COUNT());
-            case STEEL -> new Steel(type.getDEFAULT_COUNT());
-            case FERTILIZER -> new Fertilizer(type.getDEFAULT_COUNT());
+    public static Item getItemByItemType(ItemType type, int count) {
+        return switch(type) {
+            case MAGNETITE -> new Magnetite(count);
+            case COAL -> new Coal(count);
+            case ICE -> new Ice(count);
+            case URANINITE -> new Uraninite(count);
+            case IRON -> new Iron(count);
+            case CARBON -> new Carbon(count);
+            case SULFUR -> new Sulfur(count);
+            case OXYGEN -> new Oxygen(count);
+            case HYDROGEN -> new Hydrogen(count);
+            case URANIUM -> new Uranium(count);
+            case DARK_MATTER -> new DarkMatter(count);
+            case STEEL -> new Steel(count);
+            case FERTILIZER -> new Fertilizer(count);
             case NONE -> null;
         };
+    }
+
+    private Item getDefaultItemByType(ItemType type) {
+        return getItemByItemType(type, type.getDEFAULT_COUNT());
     }
 
     public ObservableMap<ItemType, Item> getItems() {

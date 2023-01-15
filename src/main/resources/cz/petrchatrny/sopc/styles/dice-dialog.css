@@ -1,0 +1,9 @@
+AnchorPane {
+    -fx-background-color: #0a1e65;
+}
+
+
+FontIcon {
+    -fx-fill: white;
+    -fx-font-size: 60;
+}

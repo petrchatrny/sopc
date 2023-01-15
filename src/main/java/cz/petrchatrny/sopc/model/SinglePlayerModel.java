@@ -21,10 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class SinglePlayerModel {
     private final ObservableMap<String, Agent> agents;
@@ -74,7 +71,37 @@ public class SinglePlayerModel {
     }
 
     public ObservableMap<ItemType, Item> getLocalPlayerInventory() {
-        return this.agents.get(LOCAL_PLAYER_ID).getInventory().getItems();
+        return agents.get(LOCAL_PLAYER_ID).getInventory().getItems();
+    }
+
+    public HashMap<ItemType, Integer> mineOres(int number) {
+        HashMap<ItemType, Integer> localPlayerItems = new HashMap<>();
+        List<Area> areas = mapPlan.getAreas()
+                .stream()
+                .filter(area -> area.getDiceNumber() == number)
+                .filter(area -> !area.isGroxOccupied())
+                .toList();
+
+        for (Area area : areas) {
+            area.getCells().forEach(cell -> {
+                // add items to inventory of settlers
+                Agent settler = cell.getSettler();
+                if (settler != null) {
+                    settler.getInventory().getItems().get(area.getOre()).increaseCount(); // TODO check null exception
+
+                    // collect acquired items of local user
+                    if (settler.getId().equals(LOCAL_PLAYER_ID)) {
+                        if (!localPlayerItems.containsKey(area.getOre())) {
+                            localPlayerItems.put(area.getOre(), 1);
+                        } else {
+                            localPlayerItems.put(area.getOre(), localPlayerItems.get(area.getOre()) + 1);
+                        }
+                    }
+                }
+            });
+        }
+
+        return localPlayerItems;
     }
 
     /**

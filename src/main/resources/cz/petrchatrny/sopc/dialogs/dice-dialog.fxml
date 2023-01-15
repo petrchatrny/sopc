@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="248.0" minWidth="386.0" prefHeight="248.0"
+            prefWidth="386.0" stylesheets=" @../styles/main.css, @../styles/dice-dialog.css"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <FontIcon fx:id="diceIC" iconLiteral="fas-dice-six" layoutX="168.0" layoutY="83.0" rotate="90.0"/>
+
+    <Label layoutX="24.0" layoutY="111.0">Získané rudy</Label>
+
+    <HBox fx:id="minedOres" layoutX="24.0" layoutY="148.0" prefHeight="80.0" prefWidth="339.0"/>
+
+    <Button fx:id="closeBT" layoutX="285.0" layoutY="108.0" mnemonicParsing="false" text="Potvrdit"/>
+</AnchorPane>

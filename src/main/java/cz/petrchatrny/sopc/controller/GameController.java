@@ -1,5 +1,6 @@
 package cz.petrchatrny.sopc.controller;
 
+import cz.petrchatrny.sopc.App;
 import cz.petrchatrny.sopc.entity.item.Item;
 import cz.petrchatrny.sopc.entity.item.ItemType;
 import cz.petrchatrny.sopc.entity.item.OperationNotAllowedException;
@@ -14,14 +15,21 @@ import cz.petrchatrny.sopc.view.AgentViewHolder;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -158,9 +166,38 @@ public class GameController implements Initializable, TurnChangeListener {
         // TODO implement me
     }
 
+    private void rollDice() {
+        diceBT.setDisable(true);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("dialogs/dice-dialog.fxml"));
+
+        // setup controller
+        DiceDialogController controller = new DiceDialogController();
+        controller.setOnDiceRollListener(number -> {
+            controller.showAcquiredItems(model.mineOres(number));
+            inventoryLV.refresh();
+        });
+
+        // assign controller to dialog
+        fxmlLoader.setController(controller);
+
+        try {
+            // show new dialog window
+            Parent parent = fxmlLoader.load();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void showInvalidOperationError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Chyba");
+        alert.setHeaderText("Chyba");
         alert.setContentText("Operace není povolena.");
         alert.showAndWait();
     }
@@ -168,6 +205,7 @@ public class GameController implements Initializable, TurnChangeListener {
     private void showWarning(Exception e) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Varování");
+        alert.setHeaderText("Varování");
         alert.setContentText(e.getMessage());
         alert.showAndWait();
     }
@@ -175,5 +213,6 @@ public class GameController implements Initializable, TurnChangeListener {
     @Override
     public void onTurnChanged(boolean isLocalPlayerOnTurn) {
         controlPanel.setVisible(isLocalPlayerOnTurn);
+        diceBT.setDisable(false);
     }
 }

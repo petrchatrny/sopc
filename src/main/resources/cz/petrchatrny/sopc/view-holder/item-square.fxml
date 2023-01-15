@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" prefHeight="60.0" prefWidth="60.0"
+            fx:id="item" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <ImageView fx:id="image" fitHeight="50.0" fitWidth="50.0">
+        <Image url="@../images/items/sulfur.png"/>
+    </ImageView>
+    <Label fx:id="count" layoutX="48.0" layoutY="43.0" text="5" textAlignment="RIGHT"/>
+</AnchorPane>
