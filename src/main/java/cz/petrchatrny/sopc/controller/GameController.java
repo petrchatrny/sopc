@@ -45,6 +45,8 @@ public class GameController implements Initializable, TurnChangeListener {
     @FXML private Button nextTurnBT;
 
     private SinglePlayerModel model;
+    private boolean isPlacingStructure = false;
+    private StructureType lastBuiltStructureType = StructureType.SPACESHIP;
 
     public GameController() {
     }
@@ -63,8 +65,9 @@ public class GameController implements Initializable, TurnChangeListener {
         steelBT.setOnAction(event -> craftProduct(ItemType.STEEL));
         fertilizerBT.setOnAction(event -> craftProduct(ItemType.FERTILIZER));
         groxBoxBT.setOnAction(event -> buyGroxBox());
+        groxBoxBT.setDisable(true);
         spaceShipBT.setOnAction(event -> buildStructure(StructureType.SPACESHIP));
-        spaceStationBT.setOnAction(event -> buildStructure(StructureType.SPACESTATION));
+        spaceStationBT.setOnAction(event -> buildStructure(StructureType.SPACE_STATION));
         wormHoleBT.setOnAction(event -> buildStructure(StructureType.WORMHOLE));
         wormHoleBT.setDisable(true);
         diceBT.setOnAction(event -> rollDice());
@@ -73,7 +76,7 @@ public class GameController implements Initializable, TurnChangeListener {
         // show map
         map.getChildren().add(model.getMapPlan().getCanvas());
 
-        // disable selection of item in listview
+        // disable selection of items in listview
         inventoryLV.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
 
         // show players in top bar
@@ -106,7 +109,49 @@ public class GameController implements Initializable, TurnChangeListener {
     }
 
     private void buildStructure(StructureType type) {
-        // TODO implement me
+        String style;
+        if (!isPlacingStructure) {
+            isPlacingStructure = true;
+            lastBuiltStructureType = type;
+            style = "-fx-background-color: #0a1e65";
+        } else {
+            isPlacingStructure = false;
+            style = "-fx-background-color: #04103a";
+        }
+
+        Button b = switch (lastBuiltStructureType) {
+            case SPACESHIP -> spaceShipBT;
+            case SPACE_STATION -> spaceStationBT;
+            case WORMHOLE -> wormHoleBT;
+        };
+
+        model.getMapPlan().changeMapStructuresClickability(type, isPlacingStructure, new MapStructureClickListener() {
+            @Override
+            public void onCellClicked(Cell cell) {
+                try {
+                    model.buildStructure(cell, StructureType.SPACE_STATION);
+                    inventoryLV.refresh();
+                } catch (OperationNotAllowedException e) {
+                    showWarning(e);
+                } finally {
+                    buildStructure(type);
+                }
+            }
+
+            @Override
+            public void onEdgeClicked(Edge edge) {
+                try {
+                    model.buildStructure(edge, StructureType.SPACESHIP);
+                    inventoryLV.refresh();
+                } catch (OperationNotAllowedException e) {
+                    showWarning(e);
+                } finally {
+                    buildStructure(type);
+                }
+            }
+        });
+        map.toFront();
+        b.styleProperty().set(style);
     }
 
     private void buyGroxBox() {
@@ -120,12 +165,15 @@ public class GameController implements Initializable, TurnChangeListener {
         alert.showAndWait();
     }
 
+    private void showWarning(Exception e) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Varování");
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
+
     @Override
     public void onTurnChanged(boolean isLocalPlayerOnTurn) {
-        if (isLocalPlayerOnTurn) {
-            controlPanel.setVisible(true);
-        } else {
-            controlPanel.setVisible(false);
-        }
+        controlPanel.setVisible(isLocalPlayerOnTurn);
     }
 }

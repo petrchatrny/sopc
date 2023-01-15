@@ -30,7 +30,7 @@ public class SinglePlayerModel {
     private final ObservableMap<String, Agent> agents;
     private final Queue<String> queue;
     private final String LOCAL_PLAYER_ID = SessionService.getINSTANCE().getLocalUserId();
-    private String playerOnTurnId;
+    private String agentOnTurnId;
     private TurnChangeListener turnChangeListener;
     private Map mapPlan;
 
@@ -48,8 +48,8 @@ public class SinglePlayerModel {
         bots.forEach(agent -> agents.put(agent.getId(), agent));
 
         // setup queue
-        this.queue = new LinkedList<>();
-        this.queue.addAll(
+        queue = new LinkedList<>();
+        queue.addAll(
                 this.agents.values()
                         .stream()
                         .map(Agent::getId)
@@ -61,15 +61,15 @@ public class SinglePlayerModel {
 
         // first player on turn
         Agent first = this.agents.get(queue.remove());
-        playerOnTurnId = first.getId();
+        agentOnTurnId = first.getId();
         first.onTurnStarted();
     }
 
     public void nextTurn() {
-        agents.get(playerOnTurnId).onTurnEnded();
-        queue.add(playerOnTurnId);
-        playerOnTurnId = queue.remove();
-        agents.get(playerOnTurnId).onTurnStarted();
+        agents.get(agentOnTurnId).onTurnEnded();
+        queue.add(agentOnTurnId);
+        agentOnTurnId = queue.remove();
+        agents.get(agentOnTurnId).onTurnStarted();
         turnChangeListener.onTurnChanged(isLocalPlayerOnTurn());
     }
 
@@ -86,7 +86,7 @@ public class SinglePlayerModel {
      * @see Ore
      */
     public void processOre(ItemType type) throws OperationNotAllowedException {
-        ObservableMap<ItemType, Item> inventory = agents.get(playerOnTurnId).getInventory().getItems();
+        ObservableMap<ItemType, Item> inventory = agents.get(agentOnTurnId).getInventory().getItems();
         Item ore = inventory.get(type);
         if (ore.getCount() <= 0) {
             return;
@@ -107,7 +107,7 @@ public class SinglePlayerModel {
      * @throws OperationNotAllowedException when created item cannot be crafted
      */
     public void craftProduct(ItemType type) throws OperationNotAllowedException {
-        ObservableMap<ItemType, Item> inventory = agents.get(playerOnTurnId).getInventory().getItems();
+        ObservableMap<ItemType, Item> inventory = agents.get(agentOnTurnId).getInventory().getItems();
         Item product = inventory.get(type);
         Collection<ItemStruct> requiredResources = product.requiredResources();
 
@@ -128,9 +128,79 @@ public class SinglePlayerModel {
         }
     }
 
-    private void buildStructure(StructureType type) {
-        // TODO implement me
+    public void buildStructure(MapStructure structure, StructureType type) throws OperationNotAllowedException {
+        if (structure.getSettler() != null) {
+            throw new OperationNotAllowedException("Toto pole je již obsazené.");
+        }
+
+        if (!enoughResourcesForBuildingStructure(type)) {
+            throw new OperationNotAllowedException("Nedostatek surovin pro stavbu.");
+        }
+
+        if (!structureConnectsOnPrevious(structure)) {
+            throw new OperationNotAllowedException("Stavby na sebe musejí navazovat.");
+        }
+
+        // remove required resource for building from inventory
+        Agent agent = agents.get(agentOnTurnId);
+        ObservableMap<ItemType, Item> inventory = agent.getInventory().getItems();
+        Collection<ItemStruct> requiredResources = type.getRequiredResources();
+        requiredResources.forEach(requiredResource -> {
+            Item resource = inventory.get(requiredResource.type());
+            resource.setCount(resource.getCount() - requiredResource.count());
+        });
+
+        // show settler in structure
+        structure.setSettler(agent);
+        switch (type) {
+            case SPACE_STATION -> agent.increaseSpaceStations();
+            case SPACESHIP -> agent.increaseSpaceShips();
+        }
     }
+
+    private boolean enoughResourcesForBuildingStructure(StructureType type) {
+        ObservableMap<ItemType, Item> inventory = agents.get(agentOnTurnId).getInventory().getItems();
+        Collection<ItemStruct> requiredResources = type.getRequiredResources();
+        boolean canBuild = true;
+
+        for (ItemStruct requiredResource : requiredResources) {
+            if (inventory.get(requiredResource.type()).getCount() < requiredResource.count()) {
+                canBuild = false;
+                break;
+            }
+        }
+
+        return canBuild;
+    }
+
+    private boolean structureConnectsOnPrevious(MapStructure structure) {
+        if (structure instanceof Cell) {
+            return structureConnectsOnPrevious((Cell) structure);
+        } else if (structure instanceof Edge) {
+            return structureConnectsOnPrevious((Edge) structure);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean structureConnectsOnPrevious(Cell cell) {
+        return cell.getConnections()
+                .stream()
+                .anyMatch(edge -> {
+                    if (edge.getSettler() == null) {
+                        return false;
+                    }
+                    return edge.getSettler().equals(agents.get(agentOnTurnId));
+                });
+    }
+
+    private boolean structureConnectsOnPrevious(Edge edge) {
+        Agent agent = agents.get(agentOnTurnId);
+
+        return (edge.getFrom().getSettler() != null && edge.getFrom().getSettler().equals(agent)) ||
+                (edge.getTo().getSettler() != null && edge.getTo().getSettler().equals(agent));
+    }
+
 
     private void buyGroxBox() {
         // TODO implement me
@@ -141,7 +211,7 @@ public class SinglePlayerModel {
     }
 
     private boolean isLocalPlayerOnTurn() {
-        return playerOnTurnId.equals(LOCAL_PLAYER_ID);
+        return agentOnTurnId.equals(LOCAL_PLAYER_ID);
     }
 
     public void setTurnChangeListener(TurnChangeListener turnChangeListener) {

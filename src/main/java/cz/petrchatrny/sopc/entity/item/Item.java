@@ -32,6 +32,10 @@ public abstract class Item implements IItem, Comparable<Item> {
         this.count = count;
     }
 
+    public void increaseCount() {
+        this.count++;
+    }
+
     public ItemType getType() {
         return type;
     }

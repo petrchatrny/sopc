@@ -12,6 +12,8 @@ import cz.petrchatrny.sopc.entity.item.product.Steel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
+import java.util.Arrays;
+
 public class Inventory {
     private final ObservableMap<ItemType, Item> items;
 
@@ -38,6 +40,7 @@ public class Inventory {
             case DARK_MATTER -> new DarkMatter(type.getDEFAULT_COUNT());
             case STEEL -> new Steel(type.getDEFAULT_COUNT());
             case FERTILIZER -> new Fertilizer(type.getDEFAULT_COUNT());
+            case NONE -> null;
         };
     }
 
