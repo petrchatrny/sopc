@@ -102,7 +102,7 @@ public class App extends Application {
         try {
             Parent root = loader.load();
             scene = new Scene(root);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             throw new RuntimeException(e);
         }
         stage.setScene(scene);

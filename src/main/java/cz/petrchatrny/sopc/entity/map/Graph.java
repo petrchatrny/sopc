@@ -21,7 +21,7 @@ public class Graph {
 
         cells = new ArrayList<>();
         edges = new ArrayList<>();
-        cellMap = new HashMap<>(); // <id,cell>
+        cellMap = new HashMap<>();
     }
 
     public Group getCanvas() {

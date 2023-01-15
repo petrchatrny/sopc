@@ -7,19 +7,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class RegisterController implements Resultant {
+    @FXML private Button registerBT;
+    @FXML private ProgressIndicator progressIndicator;
+    @FXML private TextField nicknameTF;
+    @FXML private TextField emailTF;
+    @FXML private PasswordField passwordTF;
+    @FXML private PasswordField repeatPasswordTF;
+
     private final RegisterModel model;
-    @FXML
-    private Button registerBT;
-    @FXML
-    private ProgressIndicator progressIndicator;
-    @FXML
-    private TextField nicknameTF;
-    @FXML
-    private TextField emailTF;
-    @FXML
-    private PasswordField passwordTF;
-    @FXML
-    private PasswordField repeatPasswordTF;
 
     /**
      * RegisterController's constructor that is requiring RegisterModel. Dependency injection patter applied.

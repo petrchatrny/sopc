@@ -185,6 +185,12 @@ public class SinglePlayerModel {
         }
     }
 
+    /**
+     * The method checks whether the user on turn has enough resources to build the required structure.
+     *
+     * @param type type of structure
+     * @return if user can build the structure
+     */
     private boolean enoughResourcesForBuildingStructure(StructureType type) {
         ObservableMap<ItemType, Item> inventory = agents.get(agentOnTurnId).getInventory().getItems();
         Collection<ItemStruct> requiredResources = type.getRequiredResources();
@@ -200,6 +206,13 @@ public class SinglePlayerModel {
         return canBuild;
     }
 
+    /**
+     * The method checks whether the selected structure in the map is connected to a structure already conquered by
+     * the user on turn.
+     *
+     * @param structure clicked map structure
+     * @return if selected structure is connected to other already conquered map structure
+     */
     private boolean structureConnectsOnPrevious(MapStructure structure) {
         if (structure instanceof Cell) {
             return structureConnectsOnPrevious((Cell) structure);

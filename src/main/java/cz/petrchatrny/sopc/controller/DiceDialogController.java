@@ -21,12 +21,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DiceDialogController implements Initializable {
-    @FXML
-    private FontIcon diceIC;
-    @FXML
-    private HBox minedOres;
-    @FXML
-    private Button closeBT;
+    @FXML private FontIcon diceIC;
+    @FXML private HBox minedOres;
+    @FXML private Button closeBT;
 
     private DiceRollListener onDiceRollListener;
 

@@ -7,14 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class LoginController implements Resultant {
-    public ProgressIndicator progressIndicator;
-    @FXML
-    private Button loginBT;
+    @FXML private ProgressIndicator progressIndicator;
+    @FXML private Button loginBT;
+    @FXML private TextField emailTF;
+    @FXML private PasswordField passwordTF;
+
     private LoginModel model;
-    @FXML
-    private TextField emailTF;
-    @FXML
-    private PasswordField passwordTF;
 
     public LoginController() {
     }
