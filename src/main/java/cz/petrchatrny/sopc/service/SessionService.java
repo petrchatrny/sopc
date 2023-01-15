@@ -69,4 +69,26 @@ public class SessionService {
             e.printStackTrace();
         }
     }
+
+    public String getLocalUserId() {
+        return getLocalUserAttribute("_id");
+    }
+
+    public String getLocalUserUsername() {
+        return getLocalUserAttribute("username");
+    }
+
+    private String getLocalUserAttribute(String attribute) {
+        try (FileReader file = new FileReader("session.json")) {
+            JsonElement fileData = JsonParser.parseReader(file);
+            if (fileData instanceof JsonNull) {
+                return null;
+            } else {
+                JsonObject json = fileData.getAsJsonObject();
+                return json.get("user").getAsJsonObject().get(attribute).getAsString();
+            }
+        } catch (IOException e) {
+            return null;
+        }
+    }
 }

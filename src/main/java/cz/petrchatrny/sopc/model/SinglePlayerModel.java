@@ -34,7 +34,9 @@ public class SinglePlayerModel {
     public SinglePlayerModel() {
         // add player
         this.agents = FXCollections.observableHashMap();
-        this.agents.put(LOCAL_PLAYER_ID, new Player(LOCAL_PLAYER_ID, Color.BLUE, "Prion"));
+        this.agents.put(LOCAL_PLAYER_ID,
+                new Player(LOCAL_PLAYER_ID, Color.BLUE, SessionService.getINSTANCE().getLocalUserUsername())
+        );
 
         // add bots
         List<Agent> bots = List.of(
