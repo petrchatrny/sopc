@@ -1,6 +1,7 @@
 package cz.petrchatrny.sopc.controller;
 
 import cz.petrchatrny.sopc.App;
+import cz.petrchatrny.sopc.SceneType;
 import cz.petrchatrny.sopc.entity.item.Item;
 import cz.petrchatrny.sopc.entity.item.ItemType;
 import cz.petrchatrny.sopc.entity.item.OperationNotAllowedException;
@@ -62,6 +63,7 @@ public class GameController implements Initializable, TurnChangeListener {
     public GameController(SinglePlayerModel model) {
         this.model = model;
         this.model.setTurnChangeListener(this);
+        this.model.startGame();
     }
 
     @Override
@@ -137,7 +139,7 @@ public class GameController implements Initializable, TurnChangeListener {
             @Override
             public void onCellClicked(Cell cell) {
                 try {
-                    model.buildStructure(cell, StructureType.SPACE_STATION);
+                    checkGameOver(model.buildStructure(cell, StructureType.SPACE_STATION));
                     inventoryLV.refresh();
                 } catch (OperationNotAllowedException e) {
                     showWarning(e);
@@ -149,7 +151,7 @@ public class GameController implements Initializable, TurnChangeListener {
             @Override
             public void onEdgeClicked(Edge edge) {
                 try {
-                    model.buildStructure(edge, StructureType.SPACESHIP);
+                    checkGameOver(model.buildStructure(edge, StructureType.SPACESHIP));
                     inventoryLV.refresh();
                 } catch (OperationNotAllowedException e) {
                     showWarning(e);
@@ -167,7 +169,7 @@ public class GameController implements Initializable, TurnChangeListener {
     }
 
     private void rollDice() {
-        diceBT.setDisable(true);
+        //diceBT.setDisable(true);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("dialogs/dice-dialog.fxml"));
 
         // setup controller
@@ -210,9 +212,27 @@ public class GameController implements Initializable, TurnChangeListener {
         alert.showAndWait();
     }
 
+    private void checkGameOver(boolean isGameOver) {
+        if (isGameOver) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Konec hry");
+            alert.setHeaderText("Konec hry");
+
+            if (model.isLocalPlayerOnTurn()) {
+                alert.setContentText("Vyhráli jste!");
+            } else {
+                alert.setContentText("Prohráli jste");
+            }
+
+            alert.showAndWait();
+            App.showScene(SceneType.HOME);
+        }
+    }
+
     @Override
     public void onTurnChanged(boolean isLocalPlayerOnTurn) {
         controlPanel.setVisible(isLocalPlayerOnTurn);
         diceBT.setDisable(false);
+        inventoryLV.refresh();
     }
 }

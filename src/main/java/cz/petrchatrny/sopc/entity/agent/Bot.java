@@ -1,6 +1,7 @@
 package cz.petrchatrny.sopc.entity.agent;
 
 import cz.petrchatrny.sopc.controller.TurnChangeListener;
+import cz.petrchatrny.sopc.model.SinglePlayerModel;
 
 import java.util.List;
 import java.util.Random;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 public class Bot extends Agent {
     private TurnChangeListener turnChangeListener;
+    private SinglePlayerModel model;
 
     public Bot(Color color, TurnChangeListener turnChangeListener) {
         super(UUID.randomUUID().toString(), color, randomUsername());
@@ -24,6 +26,7 @@ public class Bot extends Agent {
     public void onTurnStarted() {
         // TODO implement BOT logic
         setOnTurn(true);
+        model.mineOres(new Random().nextInt(1, 6));
         Thread thread = new Thread(() -> {
             try {
                 Thread.sleep(1000);
@@ -40,5 +43,9 @@ public class Bot extends Agent {
     @Override
     public void onTurnEnded() {
         setOnTurn(false);
+    }
+
+    public void setModel(SinglePlayerModel model) {
+        this.model = model;
     }
 }

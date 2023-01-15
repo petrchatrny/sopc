@@ -57,6 +57,21 @@ public class SinglePlayerModel {
 
         // setup map
         mapPlan = new Map(400, 50, getAgents());
+    }
+
+    public void startGame() {
+        // set model to bots
+        SinglePlayerModel model = this;
+        agents.values()
+                .stream()
+                .map(agent -> {
+                    if (agent instanceof Bot) {
+                        return (Bot) agent;
+                    }
+                    return null;
+                })
+                .filter(bot -> bot != null)
+                .forEach(bot -> bot.setModel(model));
 
         // first player on turn
         Agent first = this.agents.get(queue.remove());
@@ -157,7 +172,7 @@ public class SinglePlayerModel {
         }
     }
 
-    public void buildStructure(MapStructure structure, StructureType type) throws OperationNotAllowedException {
+    public boolean buildStructure(MapStructure structure, StructureType type) throws OperationNotAllowedException {
         if (structure.getSettler() != null) {
             throw new OperationNotAllowedException("Toto pole je již obsazené.");
         }
@@ -181,10 +196,15 @@ public class SinglePlayerModel {
 
         // show settler in structure
         structure.setSettler(agent);
+
+        // change number of built structure in settler
         switch (type) {
             case SPACE_STATION -> agent.increaseSpaceStations();
             case SPACESHIP -> agent.increaseSpaceShips();
         }
+
+        // check game over
+        return isGameOver(agent);
     }
 
     /**
@@ -248,11 +268,16 @@ public class SinglePlayerModel {
         // TODO implement me
     }
 
+    private boolean isGameOver(Agent agent) {
+        return agent.getSpaceShips() >= Settings.MAX_SPACESHIP_COUNT &&
+                agent.getSpaceStations() >= Settings.MAX_SPACE_STATION_COUNT;
+    }
+
     public ObservableList<Agent> getAgents() {
         return FXCollections.observableArrayList(agents.values());
     }
 
-    private boolean isLocalPlayerOnTurn() {
+    public boolean isLocalPlayerOnTurn() {
         return agentOnTurnId.equals(LOCAL_PLAYER_ID);
     }
 
