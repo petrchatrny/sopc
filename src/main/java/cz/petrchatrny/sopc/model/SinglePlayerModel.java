@@ -128,12 +128,13 @@ public class SinglePlayerModel {
      * @param type item type
      * @throws OperationNotAllowedException when processed item is not instance of Ore
      * @see Ore
+     * @return if ore was really processed
      */
-    public void processOre(ItemType type) throws OperationNotAllowedException {
+    public boolean processOre(ItemType type) throws OperationNotAllowedException {
         ObservableMap<ItemType, Item> inventory = agents.get(agentOnTurnId).getInventory().getItems();
         Item ore = inventory.get(type);
         if (ore.getCount() <= 0) {
-            return;
+            return false;
         }
 
         ore.setCount(ore.getCount() - 1);
@@ -141,6 +142,7 @@ public class SinglePlayerModel {
         for (ItemStruct res : results) {
             inventory.get(res.type()).setCount(inventory.get(res.type()).getCount() + res.count());
         }
+        return true;
     }
 
     /**

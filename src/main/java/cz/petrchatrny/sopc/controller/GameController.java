@@ -111,11 +111,13 @@ public class GameController implements Initializable, TurnChangeListener {
         }
 
         try {
-            model.processOre(type);
+            boolean processed = model.processOre(type);
             inventoryLV.refresh();
 
-            processedOres++;
-            updateProcessOreLB();
+            if (processed) {
+                processedOres++;
+                updateProcessOreLB();
+            }
         } catch (OperationNotAllowedException e) {
             showInvalidOperationError();
         }

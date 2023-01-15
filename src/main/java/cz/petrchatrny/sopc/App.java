@@ -15,9 +15,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
-import javafx.scene.media.AudioClip;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -34,7 +35,7 @@ public class App extends Application {
      * stage of application for scene changing
      */
     private static Stage stage;
-    private static AudioClip mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
     public static void main(String[] args) {
         launch();
@@ -147,7 +148,8 @@ public class App extends Application {
         try {
             if (url != null) {
                 Media media = new Media(url.toURI().toString());
-                mediaPlayer = new AudioClip(media.getSource());
+                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));  // infinite music loop
                 mediaPlayer.play();
             }
         } catch (URISyntaxException e) {
