@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -52,9 +53,11 @@ public class GameController implements Initializable, TurnChangeListener {
     @FXML private Button wormHoleBT;
     @FXML private Button diceBT;
     @FXML private Button nextTurnBT;
+    @FXML private Label processedOresLB;
 
     private SinglePlayerModel model;
     private boolean isPlacingStructure = false;
+    private int processedOres;
     private StructureType lastBuiltStructureType = StructureType.SPACESHIP;
 
     public GameController() {
@@ -64,6 +67,7 @@ public class GameController implements Initializable, TurnChangeListener {
         this.model = model;
         this.model.setTurnChangeListener(this);
         this.model.startGame();
+        processedOres = 0;
     }
 
     @Override
@@ -101,9 +105,17 @@ public class GameController implements Initializable, TurnChangeListener {
     }
 
     private void processOre(ItemType type) {
+        if (processedOres >= Settings.MAX_PROCESS_ORE_PER_TURN_COUNT) {
+            showWarning(new OperationNotAllowedException("Za kolo je možné zpracovat pouze " + Settings.MAX_PROCESS_ORE_PER_TURN_COUNT + " rud(y)."));
+            return;
+        }
+
         try {
             model.processOre(type);
             inventoryLV.refresh();
+
+            processedOres++;
+            updateProcessOreLB();
         } catch (OperationNotAllowedException e) {
             showInvalidOperationError();
         }
@@ -169,7 +181,7 @@ public class GameController implements Initializable, TurnChangeListener {
     }
 
     private void rollDice() {
-        //diceBT.setDisable(true);
+        diceBT.setDisable(true);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("dialogs/dice-dialog.fxml"));
 
         // setup controller
@@ -234,5 +246,11 @@ public class GameController implements Initializable, TurnChangeListener {
         controlPanel.setVisible(isLocalPlayerOnTurn);
         diceBT.setDisable(false);
         inventoryLV.refresh();
+        processedOres = 0;
+        updateProcessOreLB();
+    }
+
+    private void updateProcessOreLB() {
+        processedOresLB.setText("(" + processedOres + "/" + Settings.MAX_PROCESS_ORE_PER_TURN_COUNT + ")");
     }
 }

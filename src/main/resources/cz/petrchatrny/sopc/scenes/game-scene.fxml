@@ -94,8 +94,7 @@
             </Button>
 
             <Button fx:id="iceBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="image-button"
-                    text="Led"
-                    GridPane.columnIndex="2">
+                    text="Led" GridPane.columnIndex="2">
                 <graphic>
                     <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
                         <Image url="@../images/items/ice.png"/>
@@ -168,8 +167,7 @@
             </rowConstraints>
 
             <Button fx:id="spaceStationBT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
-                    styleClass="image-button"
-                    text="Vesmírná stanice">
+                    styleClass="image-button" text="Vesmírná stanice">
                 <graphic>
                     <ImageView fitHeight="36.0" pickOnBounds="true" preserveRatio="true">
                         <Image url="@../images/structures/space-station.png"/>
@@ -218,5 +216,6 @@
             <Button fx:id="nextTurnBT" mnemonicParsing="false" text="Ukončit tah" GridPane.columnIndex="1"/>
 
         </GridPane>
+        <Label fx:id="processedOresLB" layoutX="161.0" layoutY="649.0" text="(0/4)"/>
     </Pane>
 </AnchorPane>
