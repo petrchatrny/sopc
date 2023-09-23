@@ -9,3 +9,9 @@ The aim of the game is to build seven space stations as soon as possible and eig
 Main and the only language of game is Czech.
 
 ## Screenshots
+![01](docs/01.png)
+![02](docs/02.png)
+![03](docs/03.png)
+![04](docs/04.png)
+![05](docs/05.png)
+![06](docs/06.png)
